@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "762556301185",
+    "project_id": "sdp-ytbot",
+    "storage_bucket": "sdp-ytbot.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762556301185:android:274c87744ce7a06ca7b280",
+        "android_client_info": {
+          "package_name": "com.example.ytbot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_JcejN4ILRaK7Y7GZH9XoneKcDCkXu3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
