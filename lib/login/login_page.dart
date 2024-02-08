@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
 
-    print("object");
+    print("object123456fghj");
     // try signing in
     try {
       await FirebaseAuth.instance
