@@ -13,6 +13,57 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  String url = 'https://retoolapi.dev/VT22Rn/flaskdata';
+  String fetcheddata = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+    print("fetch doneeeeeeeeee");
+  }
+
+  void writeToApi(String data) async {
+    final apiUrl = 'https://retoolapi.dev/VT22Rn/flaskdata';  // Replace with your API endpoint
+
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        body: jsonEncode({'new data': data}),
+      );
+
+      if (response.statusCode == 201) {
+        print('Data written to API successfully!');
+      } else {
+        print('Failed to write data to API. Status code: ${response.statusCode}, Response: ${response.body}');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+  void _fetchData() async {
+    try {
+      http.Response response = await http.get(
+        Uri.parse(url), // Use correct API endpoint
+      );
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        setState(() {
+          print("settttttt dataaaaaaaaa");
+          fetcheddata = jsonData.toString();
+          print(fetcheddata);// Convert JSON to String
+        });
+      } else {
+        // Handle API error gracefully
+        print('Error: ${response.statusCode}');
+      }
+    } catch (error) {
+      // Handle network or other errors
+      print('Error: $error');
+    }
+  }
+
   final TextEditingController _textFieldController = TextEditingController();
   String _displayText = "data"; // Initial value for the body text
 
@@ -51,9 +102,11 @@ class _HomePageState extends State<HomePage> {
             ),
             GestureDetector(
               onTap: () {
-                // Update the body text when the icon is tapped
                 setState(() {
-                  _displayText = _textFieldController.text;
+                  writeToApi(_textFieldController.text);
+                  print("write cap doneeeeeee");
+                  print(_textFieldController.text);
+                  _displayText = fetcheddata;
                 });
               },
               child: Padding(
@@ -68,8 +121,15 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+Map<String, String> buildRequest(String apiUrl, String apiKey, String videoId) {
+  return {
+    'url': '$apiUrl?api_key=$apiKey&video_id=$videoId',
+    // Add other parameters as needed
+  };
+}
 
 
+/*
 Future<String> fetchYouTubeCaptions(String videoId) async {
   final apiUrl = 'https://www.youtube.com/watch?v=JeU_EYFH1Jk';
   final apiKey = 'YOUR_YOUTUBE_API_KEY';
@@ -92,15 +152,6 @@ Future<String> fetchYouTubeCaptions(String videoId) async {
   return captions;
 }
 
-Map<String, String> buildRequest(String apiUrl, String apiKey, String videoId) {
-  // Implement your logic to build the request map here
-  // You may need to add query parameters, headers, etc.
-  // Example:
-  return {
-    'url': '$apiUrl?api_key=$apiKey&video_id=$videoId',
-    // Add other parameters as needed
-  };
-}
 
 Future<List<Map<String, dynamic>>> performApiRequest(Map<String, String> request) async {
   // Implement your logic to perform the API request here
@@ -133,4 +184,4 @@ void main() async {
   final videoId = 'YOUR_YOUTUBE_VIDEO_ID';
   final captions = await fetchYouTubeCaptions(videoId);
   print(captions);
-}
+}*/
