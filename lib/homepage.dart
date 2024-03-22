@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ytbot/components/my_drawer.dart';
 import 'package:http/http.dart' as http;
-
+import 'chat_helper/message_tile.dart';
+import 'components/toast.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,59 +13,58 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  String url = 'https://retoolapi.dev/VT22Rn/flaskdata';
-  String fetcheddata = '';
+  final TextEditingController videoIdController = TextEditingController();
+  List<Map<String, dynamic>> chatHistory = [];
 
   @override
   void initState() {
     super.initState();
-    _fetchData();
-    print("fetch doneeeeeeeeee");
   }
 
-  void writeToApi(String data) async {
-    final apiUrl = 'https://retoolapi.dev/VT22Rn/flaskdata';  // Replace with your API endpoint
+  Future<void> processVideoCap() async {
 
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        body: jsonEncode({'new data': data}),
-      );
+    final String apiUrl = 'http://192.168.99.2:5000/process_video';
+    final Map<String, dynamic> requestData = {'video_id': videoIdController.text};
 
-      if (response.statusCode == 201) {
-        print('Data written to API successfully!');
-      } else {
-        print('Failed to write data to API. Status code: ${response.statusCode}, Response: ${response.body}');
-      }
-    } catch (error) {
-      print('Error: $error');
-    }
-  }
-  void _fetchData() async {
-    try {
-      http.Response response = await http.get(
-        Uri.parse(url), // Use correct API endpoint
-      );
-      if (response.statusCode == 200) {
-        final jsonData = jsonDecode(response.body);
-        setState(() {
-          print("settttttt dataaaaaaaaa");
-          fetcheddata = jsonData.toString();
-          print(fetcheddata);// Convert JSON to String
-        });
-      } else {
-        // Handle API error gracefully
-        print('Error: ${response.statusCode}');
-      }
-    } catch (error) {
-      // Handle network or other errors
-      print('Error: $error');
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(requestData),
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+      setState(() {
+        chatHistory.add({'message': responseData['message'], 'sendByMe': false});
+      });
+    } else {
+      setState(() {
+        chatHistory.add({'message': 'Request failed with status: ${response.statusCode}', 'sendByMe': false});
+      });
     }
   }
 
-  final TextEditingController _textFieldController = TextEditingController();
-  String _displayText = "data"; // Initial value for the body text
+  Future<void> processQuestion() async {
+    final String apiUrl = 'http://192.168.99.2:5000/answer_question';
+    final Map<String, dynamic> requestData = {'question': videoIdController.text};
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {'question': 'application/json'},
+      body: jsonEncode(requestData),
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+      setState(() {
+        chatHistory.add({'response': responseData['response'], 'sendByMe': false});
+      });
+    } else {
+      setState(() {
+        chatHistory.add({'message': 'Request failed with status: ${response.statusCode}', 'sendByMe': false});
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,16 +74,36 @@ class _HomePageState extends State<HomePage> {
         drawer: MyDrawer(),
         appBar: AppBar(
           title: Text("Chat here"),
-          backgroundColor: Colors.orangeAccent,
+          backgroundColor: Color(0xff7eb5e1),
         ),
-        body: Text(_displayText), // Display the text here
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Column(
+                children: chatHistory.map((messageData) {
+                  return MessageTile(
+                    message: messageData['message'],
+                    sendByMe: messageData['sendByMe'],
+                  );
+                }).toList(),
+              ),
+              // Display "Enter the URL" text if no messages exist
+              if (chatHistory.isEmpty)
+                Center(
+                  child: Text("Enter the URL"),
+                ),
+              SizedBox(height: 100,),
+            ],
+          ),
+        ),
+
         bottomSheet: Row(
           children: [
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
-                  controller: _textFieldController, // Connect the controller
+                  controller: videoIdController, // Connect the controller
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     enabledBorder: const OutlineInputBorder(
@@ -103,10 +122,31 @@ class _HomePageState extends State<HomePage> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  writeToApi(_textFieldController.text);
-                  print("write cap doneeeeeee");
-                  print(_textFieldController.text);
-                  _displayText = fetcheddata;
+                  String message = videoIdController.text;
+                  if (message.isEmpty) {
+                    showToast(message: "Please enter a valid message...!");
+                  } else {
+                    // Define a regex pattern to match YouTube URLs
+                    final RegExp youtubeUrlPattern = RegExp(
+                      r'^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$',
+                      caseSensitive: false,
+                    );
+
+                    // Check if the message matches the YouTube URL pattern
+                    if (youtubeUrlPattern.hasMatch(message)) {
+                      // If it's a YouTube URL, call the function to process the video
+                      chatHistory.add({'message': message, 'sendByMe': true});
+                      processVideoCap(); // Assuming this function is defined elsewhere
+                      videoIdController.text = "";
+                    } else {
+                      // If it's not a YouTube URL, call another function or handle it differently
+                      // For example, you might want to show a toast message or handle the message differently
+                      chatHistory.add({'message': message, 'sendByMe': true});
+                      processQuestion();
+                      videoIdController.text = "";
+
+                    }
+                  }
                 });
               },
               child: Padding(
@@ -121,67 +161,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Map<String, String> buildRequest(String apiUrl, String apiKey, String videoId) {
-  return {
-    'url': '$apiUrl?api_key=$apiKey&video_id=$videoId',
-    // Add other parameters as needed
-  };
-}
-
-
-/*
-Future<String> fetchYouTubeCaptions(String videoId) async {
-  final apiUrl = 'https://www.youtube.com/watch?v=JeU_EYFH1Jk';
-  final apiKey = 'YOUR_YOUTUBE_API_KEY';
-
-  final request = buildRequest(apiUrl, apiKey, videoId);
-
-  final response = await performApiRequest(request);
-
-  var captions = "";
-
-  if (response.length > 0) {
-    final firstObject = response[0];
-    final baseUrl = firstObject['baseUrl'];
-    print('Base url: $baseUrl');
-    captions = await fetchAndProcessCaptionsFromBaseUrl(baseUrl);
-  } else {
-    captions = 'Invalid Video link or No English subtitle found!';
-  }
-
-  return captions;
-}
-
-
-Future<List<Map<String, dynamic>>> performApiRequest(Map<String, String> request) async {
-  // Implement your logic to perform the API request here
-  // Example using http package:
-  final response = await http.get(Uri.parse(request['url']!));
-
-  if (response.statusCode == 200) {
-    final jsonResponse = json.decode(response.body);
-    return List<Map<String, dynamic>>.from(jsonResponse);
-  } else {
-    throw Exception('Failed to load captions');
-  }
-}
-
-Future<String> fetchAndProcessCaptionsFromBaseUrl(String baseUrl) async {
-  // Implement your logic to fetch and process captions from the base URL
-  // Example:
-  final response = await http.get(Uri.parse(baseUrl));
-
-  if (response.statusCode == 200) {
-    // Process the captions
-    return response.body;
-  } else {
-    throw Exception('Failed to fetch captions from base URL');
-  }
-}
-
-void main() async {
-  // Example usage:
-  final videoId = 'YOUR_YOUTUBE_VIDEO_ID';
-  final captions = await fetchYouTubeCaptions(videoId);
-  print(captions);
-}*/

@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ytbot/components/my_button.dart';
 import 'package:ytbot/components/my_textfield.dart';
 import 'package:ytbot/components/square_tile.dart';
 import 'package:ytbot/firebase/firebase_auth_services.dart';
 import 'package:ytbot/components/toast.dart';
 import 'package:ytbot/homepage.dart';
+
+import '../components/validation_helper.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -16,55 +19,76 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // text editing controllers
-/*  final usernameController = TextEditingController();
 
-  final passwordController = TextEditingController();
+   bool _isSigning = false;
+   final FirebaseAuthService _auth = FirebaseAuthService();
 
-  // sign user in method
-  void signUserIn() async {
-    // show loading circle
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
+  FirebaseAuth _auth1 = FirebaseAuth.instance;
 
-    // try signing in
-    try {
-      await FirebaseAuth.instance
-        ..signInWithEmailAndPassword(
-            email: usernameController.text, password: passwordController.text);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Incorrect Email'),
-            );
-          },
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  void _signUpWithGoogle() async {
+    setState(() {
+      _isSigning = true;
+    });
+
+    User? user = await signInWithGoogle();
+
+    setState(() {
+      _isSigning = false;
+    });
+
+    if (user != null) {
+      try{
+        showToast(message: "Welcome to the app.");
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
         );
-      } else if (e.code == 'wrong-password') {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Wrong Password'),
-            );
-          },
-        );
+        showToast(message: "User is successfully signed in");
       }
+      catch(e) {
+        print(e);
+      }
+    } else {
+   // else ma pn jai che
     }
-    // pop the loading circle
-    Navigator.pop(context);
-  }*/
+  }
 
-  bool _isSigning = false;
-  final FirebaseAuthService _auth = FirebaseAuthService();
+  Future<User?> signInWithGoogle() async {
+    try {
+      // Trigger Google Sign In
+      final GoogleSignInAccount? googleSignInAccount =
+      await googleSignIn.signIn();
+
+      if (googleSignInAccount == null) {
+        // User canceled Google Sign In
+        return null;
+      }
+
+      // Obtain GoogleSignInAuthentication object
+      final GoogleSignInAuthentication googleSignInAuthentication =
+      await googleSignInAccount.authentication;
+
+      // Create GoogleSignInCredential using the obtained authentication
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      // Sign in with Google credential
+      UserCredential authResult = await _auth1.signInWithCredential(credential);
+
+      // Return the user
+      return authResult.user;
+    } catch (e) {
+      print('Error signing in with Google: $e');
+      // Handle the error as needed
+      return null;
+    }
+  }
+
+
+
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -111,8 +135,8 @@ class _LoginPageState extends State<LoginPage> {
                   // username textfield
                   MyTextField(
                     controller: _emailController,
-                    obscureText: true,
-
+                    obscureText: false, labelText: 'Username',
+                    validator: ValidationHelper.validateEmail,
                   ),
 
                   const SizedBox(height: 10),
@@ -121,6 +145,8 @@ class _LoginPageState extends State<LoginPage> {
                   MyTextField(
                     controller: _passwordController,
                     obscureText: true,
+                      labelText: 'Password',
+                    validator: ValidationHelper.validatePassword,
                   ),
 
                   const SizedBox(height: 10),
@@ -185,7 +211,9 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       // google button
                       SquareTile(
-                          onTap: (){},//() => AuthService().signInWithGoogle(),
+                          onTap: (){
+                            _signUpWithGoogle();
+                          },
                           imagePath: 'assets/images/google.png'),
 
                       SizedBox(width: 25),

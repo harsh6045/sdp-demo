@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ytbot/components/my_button.dart';
 import 'package:ytbot/components/my_textfield.dart';
 import 'package:ytbot/components/square_tile.dart';
+import 'package:ytbot/components/validation_helper.dart';
 import 'package:ytbot/firebase/auth_service.dart';
 import 'package:ytbot/firebase/firebase_auth_services.dart';
 import 'package:ytbot/components/toast.dart';
@@ -134,7 +135,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   // username textfield
                   MyTextField(
                     controller: _usernameController,
-                    obscureText: false,
+                    obscureText: false, labelText: 'Username',
+                    validator: ValidationHelper.validateName,
                   ),
 
                   const SizedBox(height: 10),
@@ -142,7 +144,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   // password textfield
                   MyTextField(
                     controller: _emailController,
-                    obscureText: true,
+                    obscureText: true, labelText: 'Email',
+                    validator: ValidationHelper.validateEmail,
                   ),
 
                   const SizedBox(height: 10),
@@ -150,7 +153,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   // Confirm password textfield
                   MyTextField(
                     controller:_passwordController ,
-                    obscureText: true,
+                    obscureText: true, labelText: 'Password',
+                    validator: ValidationHelper.validatePassword,
                   ),
 
                   const SizedBox(height: 10),

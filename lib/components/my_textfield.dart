@@ -1,39 +1,45 @@
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
-  final controller;
+  final TextEditingController controller;
   final bool obscureText;
+  final String labelText;
+  final String? Function(String?)? validator;
 
   const MyTextField({
-    super.key,
+    Key? key,
     required this.controller,
     required this.obscureText,
-  });
+    required this.labelText,
+    required this.validator
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      child: TextField(
+      child: TextFormField(
+        validator: validator,
         keyboardType: TextInputType.emailAddress,
         controller: controller,
         obscureText: obscureText,
         decoration: InputDecoration(
-          labelText: 'Username',
-            labelStyle: TextStyle(
-              color: Colors.black, // Change the color of the label text
-              fontSize: 16.0,     // Change the font size of the label text
-              fontWeight: FontWeight.bold, // Change the font weight of the label text
-            ),
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade400),
-            ),
-            fillColor: Colors.grey.shade200,
-            filled: true,
-            hintStyle: TextStyle(color: Colors.grey[500])),
+          labelText: labelText, // Use the provided labelText here
+          labelStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+          ),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade400),
+          ),
+          fillColor: Colors.grey.shade200,
+          filled: true,
+          hintStyle: TextStyle(color: Colors.grey[500]),
+        ),
       ),
     );
   }
