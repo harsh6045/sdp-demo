@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ytbot/homepage.dart';
+import 'package:ytbot/screens/url_screen.dart';
 import 'package:ytbot/tabs/about_page.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -56,7 +57,7 @@ class MyDrawer extends StatelessWidget {
                   leading: const Icon(Icons.home),
                   title: const Text('Home'),
                   onTap: () {
-                    Navigator.pop(context, MaterialPageRoute(builder: (context) => HomePage(),));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UrlPage(),));
                   },
                 ),
                 ListTile(

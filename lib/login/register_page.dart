@@ -97,7 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
       showToast(message: "User is successfully created");
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(onTap: togglePages),));
     } else {
-      showToast(message: "Some error happend");
+      showToast(message: "Unable to register");
     }
   }
 
@@ -114,9 +114,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // logo
-                  const Icon(
-                    Icons.lock,
-                    size: 100,
+                  SizedBox(height: 20,),
+                  // logo
+                  Image.asset(
+                    "assets/images/ytbot logo.png",
+                    height: 130,
                   ),
 
                   const SizedBox(height: 25),
@@ -160,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 10),
 
                   // forgot password?
-                  Padding(
+                  /*Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -171,7 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ],
                     ),
-                  ),
+                  ),*/
 
                   const SizedBox(height: 25),
 
@@ -211,10 +213,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
 
                   // google + apple sign in buttons
-                  Row(
+                  /*Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // google button
@@ -225,11 +227,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(width: 25),
 
                       // apple button
-                      SquareTile(onTap: () {}, imagePath: 'assets/images/apple.png')
                     ],
-                  ),
+                  ),*/
 
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
 
                   // not a member? register now
                   Row(

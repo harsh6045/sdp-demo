@@ -7,6 +7,7 @@ import 'package:ytbot/components/square_tile.dart';
 import 'package:ytbot/firebase/firebase_auth_services.dart';
 import 'package:ytbot/components/toast.dart';
 import 'package:ytbot/homepage.dart';
+import 'package:ytbot/screens/url_screen.dart';
 
 import '../components/validation_helper.dart';
 
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
         showToast(message: "Welcome to the app.");
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => UrlPage()),
         );
         showToast(message: "User is successfully signed in");
       }
@@ -112,10 +113,12 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+
+                  SizedBox(height: 20,),
                   // logo
-                  const Icon(
-                    Icons.lock,
-                    size: 100,
+                  Image.asset(
+                    "assets/images/ytbot logo.png",
+                    height: 130,
                   ),
 
                   const SizedBox(height: 50),
@@ -152,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 10),
 
                   // forgot password?
-                  Padding(
+                  /*Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -163,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
-                  ),
+                  ),*/
 
                   const SizedBox(height: 25),
 
@@ -173,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                     txt: "Sign In",
                   ),
 
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
 
                   // or continue with
                   Padding(
@@ -203,11 +206,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
 
                   // google + apple sign in buttons
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       // google button
                       SquareTile(
@@ -219,11 +223,10 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(width: 25),
 
                       // apple button
-                      SquareTile(onTap: () {}, imagePath: 'assets/images/apple.png')
                     ],
                   ),
 
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
 
                   // not a member? register now
                   Row(
@@ -270,7 +273,7 @@ class _LoginPageState extends State<LoginPage> {
 
     if (user != null) {
       showToast(message: "User is successfully signed in");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage(),));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UrlPage(),));
     } else {
       showToast(message: "some error occured");
     }

@@ -57,7 +57,7 @@ class MessageTile extends StatelessWidget {
             textAlign: TextAlign.start,
             style: TextStyle(
                 color: Colors.white,
-                fontSize: 20,
+                fontSize: 18,
                 fontFamily: 'OverpassRegular',
                 fontWeight: FontWeight.w300
             )
