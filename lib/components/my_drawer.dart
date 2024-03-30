@@ -1,14 +1,30 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ytbot/homepage.dart';
 import 'package:ytbot/screens/url_screen.dart';
 import 'package:ytbot/tabs/about_page.dart';
 
+import '../login/login_or_register.dart';
+
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
 
+
   navigateTo(String route, BuildContext context) {
     Navigator.of(context).pushReplacementNamed(route);
+  }
+
+  Future<void> signOut(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginOrRegisterPage()),
+      );
+    } catch (e) {
+      print(e); // Handle any errors
+    }
   }
 
   @override
@@ -19,7 +35,7 @@ class MyDrawer extends StatelessWidget {
           Container(
             height: 150,
             width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
                 top: 70, bottom: 17, left: 25, right: 20),
             decoration: BoxDecoration(
                 boxShadow: [
@@ -31,15 +47,15 @@ class MyDrawer extends StatelessWidget {
                   ),
                 ],
                 borderRadius:
-                BorderRadius.only(),
-                gradient: LinearGradient(
+                const BorderRadius.only(),
+                gradient: const LinearGradient(
                     colors:  [
-                      const Color(0xff205194),
-                      const Color(0xff122f56)
+                      Color(0xff205194),
+                      Color(0xff122f56),
                     ]
                 )
             ),
-            child: Text("YT BOT",
+            child: const Text("YT BOT",
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   color: Colors.white,
@@ -65,6 +81,14 @@ class MyDrawer extends StatelessWidget {
                   title: const Text('About'),
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage(),));
+                  },
+                ),
+
+                ListTile(
+                  leading: const Icon(Icons.logout),
+                  title: const Text('Logout'),
+                  onTap: () {
+                    signOut(context);
                   },
                 ),
               ],

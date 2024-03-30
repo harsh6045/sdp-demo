@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +76,10 @@ class _HomePageState extends State<HomePage> {
         Uri.parse(apiUrl),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(requestData),
-      );
+      ).timeout(Duration(seconds: 10), onTimeout: () {
+        // This block will be executed if the request takes more than 10 seconds
+        throw TimeoutException('The request took longer than 10 seconds');
+      });
 
       print("request sent");
 
@@ -97,22 +101,20 @@ class _HomePageState extends State<HomePage> {
         });
       }
     } catch (error, stackTrace) {
-      print("Error: $error");
-      print("Stack trace: $stackTrace");
+      if (error is TimeoutException) {
+        // Handle the timeout exception
+        setState(() {
+          chatHistory.add({'message': 'Question Unrelated..! Please try asking a different question', 'sendByMe': false});
+        });
+      } else {
+        print("Error: $error");
+        print("Stack trace: $stackTrace");
+      }
     }
   }
-  Future<void> signOut() async {
-    try {
-      await FirebaseAuth.instance.signOut();
-      // Navigate to the login or register page after signing out
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginOrRegisterPage()),
-      );
-    } catch (e) {
-      print(e); // Handle any errors
-    }
-  }
+
+
+
 
 
 
@@ -126,13 +128,7 @@ class _HomePageState extends State<HomePage> {
           title: Text("Chat here"),
           backgroundColor: Color(0xff1c4072),
           actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.logout), // Use the logout icon
-              onPressed: () {
-                // Implement your logout logic here
-                signOut();
-              },
-            ),
+
           ],
         ),
 

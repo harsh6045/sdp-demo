@@ -1,5 +1,3 @@
-
-
 class ValidationHelper {
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -38,7 +36,7 @@ class ValidationHelper {
     if (!phoneRegex.hasMatch(value)) {
       return 'Please enter a valid phone number';
     }
-    return null; // Return null if the input is valid
+    return null;
   }
 
 }
