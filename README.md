@@ -28,19 +28,21 @@ Users can paste a video URL, retrieve captions, quickly skim content, and extrac
 ## Screenshots
 
 <div align="center">
-  <img src="C:\Users\langa\Downloads\1.webp" alt="Image 1" width="30%">
-  <img src="C:\Users\langa\Downloads\2.webp" alt="Image 2" width="30%">
-  <img src="C:\Users\langa\Downloads\3.webp" alt="Image 3" width="30%">
+  <img src="https://github.com/harsh6045/ytchat-bot/assets/137603920/7e135521-def0-482c-b679-bcabccc2f6e9" alt="Screenshot 1" width="30%">
+  <img src="https://github.com/harsh6045/ytchat-bot/assets/137603920/ea63c29c-47e8-4cd7-86df-27ef3281137c" alt="Screenshot 2" width="30%">
+  <img src="https://github.com/harsh6045/ytchat-bot/assets/137603920/bdcf7cd8-0253-4289-a225-8e283a0665e9" alt="Screenshot 3" width="30%">
 </div>
 <div align="center">
-  <img src="C:\Users\langa\Downloads\4.webp" alt="Image 4" width="30%">
-  <img src="C:\Users\langa\Downloads\5.webp" alt="Image 5" width="30%">
-  <img src="C:\Users\langa\Downloads\6.webp" alt="Image 6" width="30%">
+  <img src="https://github.com/harsh6045/ytchat-bot/assets/137603920/a7e9b6bf-5357-4776-90b7-1afb2ad1fc39" alt="Screenshot 4" width="30%">
+  <img src="https://github.com/harsh6045/ytchat-bot/assets/137603920/03399aeb-d9ea-4f2b-bfdd-90a66bfc0198" alt="Screenshot 5" width="30%">
+  <img src="https://github.com/harsh6045/ytchat-bot/assets/137603920/02e9c0f8-b5bc-4f66-9e0f-217213f3a8e4" alt="Screenshot 6" width="30%">
 </div>
 <div align="center">
-  <img src="C:\Users\langa\Downloads\7.webp" alt="Image 7" width="30%">
-  <img src="C:\Users\langa\Downloads\88.webp" alt="Image 8" width="30%">
+  <img src="https://github.com/harsh6045/ytchat-bot/assets/137603920/05d5e794-48a0-47a0-ad46-b8e855273463" alt="Screenshot 7" width="30%">
+  <img src="https://github.com/harsh6045/ytchat-bot/assets/137603920/f3321004-bcb5-4aed-a8ac-70088622d0e0" alt="Screenshot 88" width="30%">
 </div>
+
+
 
 
 ## Installation
