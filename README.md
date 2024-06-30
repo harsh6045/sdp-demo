@@ -1,4 +1,4 @@
-![WhatsApp Image 2024-06-21 at 12 12 56 PM](https://github.com/harsh6045/ytchat-bot/assets/137603920/a663b19c-e94e-4e37-8cdc-a8b3e1b979fc)# YouTube Caption Extraction Chat Bot
+## YouTube Caption Extraction Chat Bot
 
 Welcome to the YouTube Caption Extraction Chat Bot application! This Flutter app enhances user experience and accessibility to YouTube videos by allowing users to quickly access video data through caption extraction and intelligent query processing.
 
