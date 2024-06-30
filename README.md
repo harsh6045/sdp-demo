@@ -2,6 +2,10 @@
 
 Welcome to the YouTube Caption Extraction Chat Bot application! This Flutter app enhances user experience and accessibility to YouTube videos by allowing users to quickly access video data through caption extraction and intelligent query processing.
 
+## Download the app
+
+Click on the link to download the app. [Link](https://play.google.com/store/apps/details?id=com.harsh.ytbot)
+
 ## Table of Contents
 
 - [Introduction](#introduction)
