@@ -52,8 +52,8 @@ To get started with the YouTube Caption Extraction Chat Bot, follow these steps:
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/harsh6045/ytchat-bot.git
-    cd ytchat-bot
+    git clone https://github.com/harsh6045/sdp-demo.git
+    cd sdp-demo
     ```
 
 2. **Install dependencies:**
