@@ -1,4 +1,4 @@
-# YouTube Caption Extraction Chat Bot
+![WhatsApp Image 2024-06-21 at 12 12 56 PM](https://github.com/harsh6045/ytchat-bot/assets/137603920/a663b19c-e94e-4e37-8cdc-a8b3e1b979fc)# YouTube Caption Extraction Chat Bot
 
 Welcome to the YouTube Caption Extraction Chat Bot application! This Flutter app enhances user experience and accessibility to YouTube videos by allowing users to quickly access video data through caption extraction and intelligent query processing.
 
@@ -28,9 +28,20 @@ Users can paste a video URL, retrieve captions, quickly skim content, and extrac
 ## Screenshots
 
 <div align="center">
-  <img src="https://github.com/harsh6045/ytchat-bot/assets/137603920/db642d69-dcd9-424b-a05f-528286668e21" alt="Screenshot 1" width="45%"/>
-
+  <img src="C:\Users\langa\Downloads\1.webp" alt="Image 1" width="30%">
+  <img src="C:\Users\langa\Downloads\2.webp" alt="Image 2" width="30%">
+  <img src="C:\Users\langa\Downloads\3.webp" alt="Image 3" width="30%">
 </div>
+<div align="center">
+  <img src="C:\Users\langa\Downloads\4.webp" alt="Image 4" width="30%">
+  <img src="C:\Users\langa\Downloads\5.webp" alt="Image 5" width="30%">
+  <img src="C:\Users\langa\Downloads\6.webp" alt="Image 6" width="30%">
+</div>
+<div align="center">
+  <img src="C:\Users\langa\Downloads\7.webp" alt="Image 7" width="30%">
+  <img src="C:\Users\langa\Downloads\88.webp" alt="Image 8" width="30%">
+</div>
+
 
 ## Installation
 
