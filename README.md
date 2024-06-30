@@ -6,6 +6,7 @@ Welcome to the YouTube Caption Extraction Chat Bot application! This Flutter app
 
 - [Introduction](#introduction)
 - [Features](#features)
+- [Screenshots](#screenshots)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
@@ -24,6 +25,13 @@ Users can paste a video URL, retrieve captions, quickly skim content, and extrac
 - **Cross-Questioning Functionality:** Clarify doubts or seek additional information from extracted captions.
 - **Efficient Information Retrieval:** Eliminate time-consuming navigation through lengthy videos, enabling quick access to relevant information.
 
+## Screenshots
+
+<div align="center">
+  <img src="https://github.com/harsh6045/ytchat-bot/assets/137603920/db642d69-dcd9-424b-a05f-528286668e21" alt="Screenshot 1" width="45%"/>
+
+</div>
+
 ## Installation
 
 To get started with the YouTube Caption Extraction Chat Bot, follow these steps:
@@ -32,7 +40,7 @@ To get started with the YouTube Caption Extraction Chat Bot, follow these steps:
 
     ```bash
     git clone https://github.com/harsh6045/ytchat-bot.git
-    cd YouTube-Caption-Extraction-Chat-Bot
+    cd ytchat-bot
     ```
 
 2. **Install dependencies:**
